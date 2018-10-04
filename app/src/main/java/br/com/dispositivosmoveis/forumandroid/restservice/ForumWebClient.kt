@@ -1,6 +1,7 @@
 package com.moveis.forum.restservice
 
 import android.util.Log
+import br.com.dispositivosmoveis.forumandroid.restservice.RetrofitInitializer
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -184,7 +185,7 @@ class ForumWebClient {
         })
     }
 
-    fun getComentarios(categoria: Categoria topico: Topico iCallbackResponse: ICallbackResponse<List<Comentario>>? = null) {
+    fun getComentarios(categoria: Categoria, topico: Topico, iCallbackResponse: ICallbackResponse<List<Comentario>>? = null) {
         val service = RetrofitInitializer().modelsService()
 
 

@@ -1,5 +1,8 @@
 package br.com.dispositivosmoveis.forumandroid.restservice
 
+import com.moveis.forum.restservice.Categoria
+import com.moveis.forum.restservice.Comentario
+import com.moveis.forum.restservice.Topico
 import retrofit2.http.*
 import retrofit2.Call
 
