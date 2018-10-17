@@ -1,5 +1,6 @@
 package com.moveis.forum.restservice
 
+import android.content.ContentValues.TAG
 import android.util.Log
 import br.com.dispositivosmoveis.forumandroid.restservice.RetrofitInitializer
 import retrofit2.Call
@@ -12,7 +13,6 @@ class ForumWebClient {
     val TAG = "WEBCLIENT"
 
 
-
     fun getCategorias(iCallbackResponse: ICallbackResponse<List<Categoria>>? = null) {
         val service = RetrofitInitializer().modelsService()
 
@@ -23,7 +23,7 @@ class ForumWebClient {
 
             override fun onResponse(call: Call<List<Categoria>?>?, response: Response<List<Categoria>?>?) {
 
-                
+
                 if (iCallbackResponse != null) {
                     response?.body()?.let {
                         val categorias: List<Categoria> = it
@@ -126,13 +126,15 @@ class ForumWebClient {
         })
     }
 
-    fun insertTopico(topico: Topico, iCallbackResponse: ICallbackResponse<List<Topico>>? = null) {
+    fun insertTopico(topico: Topico, iCallbackResponse: ICallbackResponse<Topico>? = null) {
+
         val service = RetrofitInitializer().modelsService()
         val call = service.insertTopico(topico)
+
         call.enqueue(object : Callback<Topico?> {
-            override fun OnResponse(call: Call<Topico?>?, responde: Response<Topico?>?) {
+            override fun onResponse(call: Call<Topico?>?, response: Response<Topico?>?) {
                 if (iCallbackResponse != null) {
-                    response?.body().let {
+                    response?.body()?.let {
                         val topico: Topico = it
                         iCallbackResponse.success(topico)
                     }
@@ -159,6 +161,7 @@ class ForumWebClient {
                 }
                 Log.i(TAG, "[INFO] updateTopico sucessfull.")
             }
+
             override fun onFailure(call: Call<Topico?>?, t: Throwable?) {
                 Log.e(TAG, "[ERROR] updateTopico error.")
             }
@@ -185,12 +188,10 @@ class ForumWebClient {
         })
     }
 
-    fun getComentarios(categoria: Categoria, topico: Topico, iCallbackResponse: ICallbackResponse<List<Comentario>>? = null) {
+    fun getComentarios(categoria: Categoria, iCallbackResponse: ICallbackResponse<List<Comentario>>? = null) {
+
         val service = RetrofitInitializer().modelsService()
-
-
-        val call = service.getComentario(topico.id!!)
-        val call2 = service.getComentario(categoria.id!!)
+        val call = service.getComentario()
         call.enqueue(object : Callback<List<Comentario>?> {
 
             override fun onResponse(call: Call<List<Comentario>?>?, response: Response<List<Comentario>?>?) {
@@ -233,10 +234,11 @@ fun insertComentario(comentario: Comentario, iCallbackResponse: ICallbackRespons
         }
     })
 }
+
 fun updateComentario(id: Int, comentario: Comentario, iCallbackResponse: ICallbackResponse<Comentario>? = null) {
     val service = RetrofitInitializer().modelsService()
 
-    val call = service.updateCategoria(id, comentario)
+    val call = service.updateComentario(id, comentario)
     call.enqueue(object : Callback<Comentario?> {
         override fun onResponse(call: Call<Comentario?>?, response: Response<Comentario?>?) {
 
@@ -271,11 +273,8 @@ fun removerComentario(id: Int, iCallbackResponse: ICallbackResponse<Comentario>?
             Log.i(TAG, "[INFO] removerComentario sucessfull.")
         }
 
-        override fun onFailure(call: Call<Categoria?>?, t: Throwable?) {
+        override fun onFailure(call: Call<Comentario?>?, t: Throwable?) {
             Log.e(TAG, "[ERROR] removerComentario error.")
         }
     })
-}
-
-
 }

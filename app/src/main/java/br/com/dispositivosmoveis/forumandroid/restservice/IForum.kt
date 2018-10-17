@@ -57,6 +57,9 @@ interface IForum {
     fun updateComentario(@Path("id") id: Int, @Body comentario: Comentario): Call<Comentario>
 
     @DELETE("/comentario/{id}/")
-    fun removeComentario(@Path("id") id: Int): Call<Comentario>
+    fun removerComentario(@Path("id") id: Int): Call<Comentario>
+
+    @GET("/comentario/{id}/")
+    fun getComentarioId(@Path("id") id: Int): Call<Comentario>
 
 }
