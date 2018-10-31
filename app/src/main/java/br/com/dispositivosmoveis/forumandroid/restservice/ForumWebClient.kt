@@ -107,6 +107,7 @@ class ForumWebClient {
     }
 
     fun getTopicos(categoria: Categoria, iCallbackResponse: ICallbackResponse<List<Topico>>? = null) {
+    fun getTopicos(categoria: Categoria, iCallbackResponse: ICallbackResponse<List<Topico>>? = null) {
         val service = RetrofitInitializer().modelsService()
         val call = service.getTopicos(categoria.id!!)
         call.enqueue(object : Callback<List<Topico>?> {
