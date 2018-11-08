@@ -5,10 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import br.com.dispositivosmoveis.forumandroid.R
-import com.moveis.forum.restservice.Categoria
-import com.moveis.forum.restservice.ForumWebClient
-import com.moveis.forum.restservice.ICallbackResponse
-import com.moveis.forum.restservice.Topico
+//import br.com.dispositivosmoveis.forumandroid.adapter.ListCategoriaAdapter
+import com.moveis.forum.restservice.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,15 +14,17 @@ class MainActivity : AppCompatActivity() {
     private var topicos: List<Topico>? = null
     private var comentarios: List<Comentario>? = null
     private val TAG = "MAIN"
+    //var listCategoriaAdapter: ListCategoriaAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Log.i(TAG, "onCreate")
     }
 
+    //IRÁ PEGAR OS DADOS NA API E APENAS EXIBIR RÁPIDAMENTE COMO SE FOSSE UM POP-UP
     override fun onStart(){
         super.onStart();
-
 
         ForumWebClient().getCategorias(object : ICallbackResponse<List<Categoria>>{
             override fun success(categorias: List<Categoria>) {
@@ -36,9 +36,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-
-
-
     }
 
     fun alerta(mensagem: String){

@@ -107,7 +107,6 @@ class ForumWebClient {
     }
 
     fun getTopicos(categoria: Categoria, iCallbackResponse: ICallbackResponse<List<Topico>>? = null) {
-    fun getTopicos(categoria: Categoria, iCallbackResponse: ICallbackResponse<List<Topico>>? = null) {
         val service = RetrofitInitializer().modelsService()
         val call = service.getTopicos(categoria.id!!)
         call.enqueue(object : Callback<List<Topico>?> {
@@ -213,69 +212,70 @@ class ForumWebClient {
             }
         })
     }
-}
 
-fun insertComentario(comentario: Comentario, iCallbackResponse: ICallbackResponse<Comentario>? = null) {
-    val service = RetrofitInitializer().modelsService()
 
-    val call = service.insertComentario(comentario)
-    call.enqueue(object : Callback<Comentario?> {
-        override fun onResponse(call: Call<Comentario?>?, response: Response<Comentario?>?) {
-            if (iCallbackResponse != null) {
-                response?.body()?.let {
-                    val comentario: Comentario = it
-                    iCallbackResponse.success(comentario)
+    fun insertComentario(comentario: Comentario, iCallbackResponse: ICallbackResponse<Comentario>? = null) {
+        val service = RetrofitInitializer().modelsService()
+
+        val call = service.insertComentario(comentario)
+        call.enqueue(object : Callback<Comentario?> {
+            override fun onResponse(call: Call<Comentario?>?, response: Response<Comentario?>?) {
+                if (iCallbackResponse != null) {
+                    response?.body()?.let {
+                        val comentario: Comentario = it
+                        iCallbackResponse.success(comentario)
+                    }
                 }
+                Log.i(TAG, "[INFO] insertComentario sucessfull.")
             }
-            Log.i(TAG, "[INFO] insertComentario sucessfull.")
-        }
 
-        override fun onFailure(call: Call<Comentario?>?, t: Throwable?) {
-            Log.e(TAG, "[ERROR] insertComentario error.")
-        }
-    })
-}
+            override fun onFailure(call: Call<Comentario?>?, t: Throwable?) {
+                Log.e(TAG, "[ERROR] insertComentario error.")
+            }
+        })
+    }
 
-fun updateComentario(id: Int, comentario: Comentario, iCallbackResponse: ICallbackResponse<Comentario>? = null) {
-    val service = RetrofitInitializer().modelsService()
+    fun updateComentario(id: Int, comentario: Comentario, iCallbackResponse: ICallbackResponse<Comentario>? = null) {
+        val service = RetrofitInitializer().modelsService()
 
-    val call = service.updateComentario(id, comentario)
-    call.enqueue(object : Callback<Comentario?> {
-        override fun onResponse(call: Call<Comentario?>?, response: Response<Comentario?>?) {
+        val call = service.updateComentario(id, comentario)
+        call.enqueue(object : Callback<Comentario?> {
+            override fun onResponse(call: Call<Comentario?>?, response: Response<Comentario?>?) {
 
-            if (iCallbackResponse != null) {
-                response?.body()?.let {
-                    val comentario: Comentario = it
-                    iCallbackResponse.success(comentario)
+                if (iCallbackResponse != null) {
+                    response?.body()?.let {
+                        val comentario: Comentario = it
+                        iCallbackResponse.success(comentario)
+                    }
                 }
+                Log.i(TAG, "[INFO] updateComentario sucessfull.")
             }
-            Log.i(TAG, "[INFO] updateComentario sucessfull.")
-        }
 
-        override fun onFailure(call: Call<Comentario?>?, t: Throwable?) {
-            Log.e(TAG, "[ERROR] updateComentario error.")
-        }
-    })
-}
+            override fun onFailure(call: Call<Comentario?>?, t: Throwable?) {
+                Log.e(TAG, "[ERROR] updateComentario error.")
+            }
+        })
+    }
 
-fun removerComentario(id: Int, iCallbackResponse: ICallbackResponse<Comentario>? = null) {
-    val service = RetrofitInitializer().modelsService()
+    fun removerComentario(id: Int, iCallbackResponse: ICallbackResponse<Comentario>? = null) {
 
-    val call = service.removerComentario(id)
-    call.enqueue(object : Callback<Comentario?> {
-        override fun onResponse(call: Call<Comentario?>?, response: Response<Comentario?>?) {
+        val service = RetrofitInitializer().modelsService()
+        val call = service.removerComentario(id)
+        call.enqueue(object : Callback<Comentario?> {
+            override fun onResponse(call: Call<Comentario?>?, response: Response<Comentario?>?) {
 
-            if (iCallbackResponse != null) {
-                response?.body()?.let {
-                    val comentario: Comentario = it
-                    iCallbackResponse.success(comentario)
+                if (iCallbackResponse != null) {
+                    response?.body()?.let {
+                        val comentario: Comentario = it
+                        iCallbackResponse.success(comentario)
+                    }
                 }
+                Log.i(TAG, "[INFO] removerComentario sucessfull.")
             }
-            Log.i(TAG, "[INFO] removerComentario sucessfull.")
-        }
 
-        override fun onFailure(call: Call<Comentario?>?, t: Throwable?) {
-            Log.e(TAG, "[ERROR] removerComentario error.")
-        }
-    })
+            override fun onFailure(call: Call<Comentario?>?, t: Throwable?) {
+                Log.e(TAG, "[ERROR] removerComentario error.")
+            }
+        })
+    }
 }
