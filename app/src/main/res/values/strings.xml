@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Forum Android</string>
     <string name="logo">TODO</string>
+
+
+    <array name="ListEntries">
+        <item>Categoria 1</item>
+        <item>Categoria 2</item>
+        <item>Categoria 3</item>
+    </array>
+
 </resources>
