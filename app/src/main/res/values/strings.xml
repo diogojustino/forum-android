@@ -8,5 +8,5 @@
         <item>Categoria 2</item>
         <item>Categoria 3</item>
     </array>
-
+    <string name="nova_categoria">Nova Categoria</string>
 </resources>
