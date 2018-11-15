@@ -9,4 +9,7 @@
         <item>Categoria 3</item>
     </array>
     <string name="nova_categoria">Nova Categoria</string>
+    <string name="title_activity_nova_categoria">NovaCategoria</string>
+    <string name="categoria">Categoria</string>
+    <string name="salvar">Salvar</string>
 </resources>

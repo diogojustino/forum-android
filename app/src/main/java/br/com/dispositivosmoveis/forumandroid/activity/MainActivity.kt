@@ -1,20 +1,22 @@
 package br.com.dispositivosmoveis.forumandroid.activity
 
+
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.ListAdapter
+import android.widget.Button
 import android.widget.ListView
 import android.widget.Toast
+
 import br.com.dispositivosmoveis.forumandroid.R
-//import br.com.dispositivosmoveis.forumandroid.adapter.ListCategoriaAdapter
 import com.moveis.forum.restservice.*
-import java.lang.reflect.Array
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var listView: ListView
+    private lateinit var listView: ListView
     private val cate: List<Categoria>? = null
 
     private var categorias: List<Categoria>? = null
@@ -23,58 +25,49 @@ class MainActivity : AppCompatActivity() {
     private val TAG = "MAIN"
     //var listCategoriaAdapter: ListCategoriaAdapter? = null
 
+    private lateinit var btnAddCategoria: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Log.i(TAG, "onCreate")
+        btnAddCategoria = findViewById(R.id.btn_add_categoria) as Button
+        btnAddCategoria.setOnClickListener({
+            val intent:Intent = Intent(this@MainActivity.getBaseContext(), NovaCategoriaActivity::class.java)
+            startActivity(intent)
+        })
+    }
+
+    //IRÁ PEGAR OS DADOS NA API
+    override fun onStart(){
+        super.onStart();
 
         ForumWebClient().getCategorias(object : ICallbackResponse<List<Categoria>> {
             override fun success(categorias: List<Categoria>) {
                 this@MainActivity.categorias = categorias
-
-                for (cat in categorias!!) {
+                val listaCategorias= arrayListOf<String>()
+                for (categoria in categorias!!) {
                     //alerta(cat.nome!!)
-                    Log.i(TAG + "Categoria", cat.toString())
+                    Log.i(TAG + "Categoria", categoria.toString())
 
                     listView = findViewById(R.id.listView)
 
 
-                    val categorias = arrayOf(cat.nome)
+                    listaCategorias.add(categoria.nome!!)
 
-                    listView.adapter = ArrayAdapter<String>(this@MainActivity, android.R.layout.simple_list_item_1, categorias)
 
 
                 }
+                listView.adapter = ArrayAdapter<String>(this@MainActivity, android.R.layout.simple_list_item_1, listaCategorias)
 
 
             }
         })
-
-
     }
 
-    //IRÁ PEGAR OS DADOS NA API
-//    override fun onStart(){
-//        super.onStart();
-//
-//        ForumWebClient().getCategorias(object : ICallbackResponse<List<Categoria>>{
-//            override fun success(categorias: List<Categoria>) {
-//                this@MainActivity.categorias = categorias
-//
-//                for (cat in categorias!!){
-//                    alerta(cat.nome!!)
-//                    Log.i(TAG + "Categoria", cat.toString())
-//
-//                    listView = findViewById(R.id.listView)
-//                }
-//            }
-//        })
-//    }
 
-
-//    //EXIBE RÁPIDAMENTE NA TELA COMO SE FOSSE UM POP-UP
-//    fun alerta(mensagem: String){
-//        Toast.makeText(this, mensagem, Toast.LENGTH_LONG).show()
-//    }
+    //EXIBE RÁPIDAMENTE NA TELA COMO SE FOSSE UM POP-UP
+    fun alerta(mensagem: String){
+        Toast.makeText(this, mensagem, Toast.LENGTH_LONG).show()
+    }
 }
