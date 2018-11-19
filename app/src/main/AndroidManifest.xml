@@ -19,9 +19,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.NovaCategoriaActivity" />
-        <activity android:name=".activity.TopicosActivity" />
-        <activity android:name=".activity.NovoTopicoActivity"></activity>
+        <activity
+            android:name=".activity.NovaCategoriaActivity"
+            android:label="Nova Categoria" />
+        <activity
+            android:name=".activity.TopicosActivity"
+            android:label="Tópicos" />
+        <activity
+            android:name=".activity.NovoTopicoActivity"
+            android:label="Novo Tópico" />
+        <activity
+            android:name=".activity.ComentariosActivity"
+            android:label="Comentários" />
+        <activity
+            android:name=".activity.NovoComentarioActivity"
+            android:label="Novo Comentário"/>
     </application>
 
 </manifest>
