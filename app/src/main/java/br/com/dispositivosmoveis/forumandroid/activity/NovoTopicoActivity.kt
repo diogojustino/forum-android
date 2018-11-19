@@ -1,6 +1,7 @@
 package br.com.dispositivosmoveis.forumandroid.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import br.com.dispositivosmoveis.forumandroid.R
@@ -8,7 +9,7 @@ import com.moveis.forum.restservice.Categoria
 import com.moveis.forum.restservice.ForumWebClient
 import com.moveis.forum.restservice.ICallbackResponse
 import com.moveis.forum.restservice.Topico
-import java.util.*
+import java.util.Date
 
 class NovoTopicoActivity : ModeloActivity() {
     private lateinit var categoriaEscolhida: Categoria
@@ -38,15 +39,17 @@ class NovoTopicoActivity : ModeloActivity() {
                 return@setOnClickListener
             }
 
-            var topico: Topico = Topico(null, titulo, autor, descricao, categoriaEscolhida, Date(), Date())
+            var topico: Topico = Topico(null, titulo, autor, descricao, categoriaEscolhida.id.toString(), Date(), Date())
+            Log.i("WEBCLIENT", topico.autor)
             ForumWebClient().insertTopico(topico, object : ICallbackResponse<Topico> {
 
                 override fun success(instance: Topico){
                     alerta("Sucesso")
+                    finish()
                 }
             })
 
-            finish()
+
         }
 
     }

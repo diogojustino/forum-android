@@ -62,6 +62,29 @@ class ForumWebClient {
         })
     }
 
+    fun insertTopico(topico: Topico, iCallbackResponse: ICallbackResponse<Topico>? = null) {
+
+        val service = RetrofitInitializer().modelsService()
+        val call = service.insertTopico(topico)
+
+        call.enqueue(object : Callback<Topico?> {
+            override fun onResponse(call: Call<Topico?>?, response: Response<Topico?>?) {
+                if (iCallbackResponse != null) {
+                    response?.body()?.let {
+                        val topico: Topico = it
+                        iCallbackResponse.success(topico)
+                        Log.i(TAG, "[INFO] insertTopico sucesfull.")
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<Topico?>?, t: Throwable?) {
+                Log.e(TAG, "[ERROR] insertTopico error.")
+            }
+        })
+    }
+
     fun updateCategoria(id: Int, categoria: Categoria, iCallbackResponse: ICallbackResponse<Categoria>? = null) {
         val service = RetrofitInitializer().modelsService()
 
@@ -130,27 +153,7 @@ class ForumWebClient {
         })
     }
 
-    fun insertTopico(topico: Topico, iCallbackResponse: ICallbackResponse<Topico>? = null) {
 
-        val service = RetrofitInitializer().modelsService()
-        val call = service.insertTopico(topico)
-
-        call.enqueue(object : Callback<Topico?> {
-            override fun onResponse(call: Call<Topico?>?, response: Response<Topico?>?) {
-                if (iCallbackResponse != null) {
-                    response?.body()?.let {
-                        val topico: Topico = it
-                        iCallbackResponse.success(topico)
-                    }
-                }
-                Log.i(TAG, "[INFO] insertTopico sucesfull.")
-            }
-
-            override fun onFailure(call: Call<Topico?>?, t: Throwable?) {
-                Log.e(TAG, "[ERROR] insertTopico error.")
-            }
-        })
-    }
 
     fun updateTopico(id: Int, topico: Topico, iCallbackResponse: ICallbackResponse<Topico>? = null) {
         val service = RetrofitInitializer().modelsService()

@@ -10,7 +10,7 @@ data class Categoria(var id: Int? = null, var nome: String?): Serializable{
 }
 
 data class Topico(var id: Int? = null, var titulo: String?, var autor: String?, var descricao: String?,
-                  var categoria: Categoria,var created_at: Date? = null, var updated_at: Date? = null) : Serializable{
+                  var categoria: String,var created_at: Date? = null, var updated_at: Date? = null) : Serializable{
 
     override fun toString(): String = titulo.toString() + "Autor: " +autor.toString()
 }
