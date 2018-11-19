@@ -3,13 +3,12 @@
     <string name="logo">TODO</string>
 
 
-    <array name="ListEntries">
-        <item>Categoria 1</item>
-        <item>Categoria 2</item>
-        <item>Categoria 3</item>
-    </array>
     <string name="nova_categoria">Nova Categoria</string>
-    <string name="title_activity_nova_categoria">NovaCategoria</string>
     <string name="categoria">Categoria</string>
     <string name="salvar">Salvar</string>
+    <string name="title_activity_teste">teste</string>
+    <string name="adicionar_topico">Adicionar topico</string>
+    <string name="autor">Autor</string>
+    <string name="titulo">Titulo</string>
+    <string name="descricao">Descrição</string>
 </resources>

@@ -108,20 +108,24 @@ class ForumWebClient {
 
     fun getTopicos(categoria: Categoria, iCallbackResponse: ICallbackResponse<List<Topico>>? = null) {
         val service = RetrofitInitializer().modelsService()
+
         val call = service.getTopicos(categoria.id!!)
+        //Erro por aqui
         call.enqueue(object : Callback<List<Topico>?> {
             override fun onResponse(call: Call<List<Topico>?>?, response: Response<List<Topico>?>?) {
+
                 if (iCallbackResponse != null) {
                     response?.body()?.let {
                         val topicos: List<Topico> = it
                         iCallbackResponse.success(topicos)
+
                     }
                 }
-                Log.i(TAG, "[INFO] getCategorias sucessfull.")
+                Log.i(TAG, "[INFO] getTopico sucessfull.")
             }
 
             override fun onFailure(call: Call<List<Topico>?>?, t: Throwable?) {
-                Log.e(TAG, "[ERROR] getCategorias error.")
+                Log.e(TAG, "[ERROR] getTopicos error.")
             }
         })
     }
