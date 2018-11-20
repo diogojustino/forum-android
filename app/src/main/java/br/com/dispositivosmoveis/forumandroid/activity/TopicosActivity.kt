@@ -1,7 +1,9 @@
 package br.com.dispositivosmoveis.forumandroid.activity
 
 import android.content.Intent
+import android.nfc.Tag
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 
 import android.widget.Button
@@ -28,12 +30,28 @@ class TopicosActivity : ModeloActivity() {
         buttonAdicionarTopico = findViewById(R.id.button_adicionar_topico)
         listTopicos = findViewById(R.id.list_topico)
 
+
+        //CRIA UM NOVO TOPICO
         buttonAdicionarTopico.setOnClickListener {
             val intent: Intent = Intent(this@TopicosActivity.getBaseContext(), NovoTopicoActivity::class.java)
             val bundle: Bundle = Bundle()
             bundle.putSerializable("categoria", categoriaEscolhida)
             intent.putExtras(bundle)
             startActivity(intent)
+        }
+
+
+        //REMOVE UM TOPICO AO SEGURAR ELE
+        listTopicos.setOnItemLongClickListener { parent, view, position, id ->
+
+            var topico: Topico = parent.adapter.getItem(position) as Topico
+            var topicoID = topico.id
+            ForumWebClient().removeTopico(topicoID!!)
+            this@TopicosActivity.recreate()
+            alerta("Topico ${topico.titulo!!.toUpperCase()} foi removido com sucesso")
+
+            true
+
         }
     }
 

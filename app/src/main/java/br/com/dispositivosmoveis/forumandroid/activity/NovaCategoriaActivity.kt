@@ -38,7 +38,7 @@ class NovaCategoriaActivity : ModeloActivity(){
             ForumWebClient().insertCategoria(categoria, object : ICallbackResponse<Categoria> {
 
                 override fun success(instance: Categoria){
-                    alerta("Sucesso")
+                    alerta("Categoria ${categoria.nome!!.toUpperCase()} criada com sucesso")
                 }
             })
             finish()

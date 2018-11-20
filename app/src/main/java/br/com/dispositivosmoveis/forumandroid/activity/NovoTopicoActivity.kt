@@ -44,7 +44,7 @@ class NovoTopicoActivity : ModeloActivity() {
             ForumWebClient().insertTopico(topico, object : ICallbackResponse<Topico> {
 
                 override fun success(instance: Topico){
-                    alerta("Sucesso")
+                    alerta("topico ${topico.titulo!!.toUpperCase()} criado com sucesso")
                     finish()
                 }
             })
