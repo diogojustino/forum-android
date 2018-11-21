@@ -9,7 +9,7 @@
 
 
     <Button
-        android:id="@+id/btnNovoComentario"
+        android:id="@+id/button_novo_comentario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
@@ -21,17 +21,17 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/txtAutor"
+            android:id="@+id/text_titulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/txtNome"
+            android:id="@+id/text_descricao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/txtDesc"
+            android:id="@+id/text_autor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -39,6 +39,6 @@
             android:id="@+id/list_comentarios"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp" />
+            />
     </LinearLayout>
 </FrameLayout>

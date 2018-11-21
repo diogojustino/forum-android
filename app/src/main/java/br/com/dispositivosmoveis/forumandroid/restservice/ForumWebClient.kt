@@ -195,10 +195,10 @@ class ForumWebClient {
         })
     }
 
-    fun getComentarios(categoria: Categoria, iCallbackResponse: ICallbackResponse<List<Comentario>>? = null) {
+    fun getComentarios(topico: Topico, iCallbackResponse: ICallbackResponse<List<Comentario>>? = null) {
 
         val service = RetrofitInitializer().modelsService()
-        val call = service.getComentario()
+        val call = service.getComentarios(topico.id!!)
         call.enqueue(object : Callback<List<Comentario>?> {
 
             override fun onResponse(call: Call<List<Comentario>?>?, response: Response<List<Comentario>?>?) {
@@ -220,24 +220,26 @@ class ForumWebClient {
         })
     }
 
-
     fun insertComentario(comentario: Comentario, iCallbackResponse: ICallbackResponse<Comentario>? = null) {
-        val service = RetrofitInitializer().modelsService()
 
+        val service = RetrofitInitializer().modelsService()
         val call = service.insertComentario(comentario)
+
         call.enqueue(object : Callback<Comentario?> {
             override fun onResponse(call: Call<Comentario?>?, response: Response<Comentario?>?) {
                 if (iCallbackResponse != null) {
-                    response?.body()?.let {
+                    Log.i(TAG, response?.body()?.topico.toString())//erro esta por aqui
+                    response?.body()?.let{
                         val comentario: Comentario = it
                         iCallbackResponse.success(comentario)
+                        Log.i(TAG, "[INFO] insertTopico sucesfull.")
                     }
                 }
-                Log.i(TAG, "[INFO] insertComentario sucessfull.")
+
             }
 
             override fun onFailure(call: Call<Comentario?>?, t: Throwable?) {
-                Log.e(TAG, "[ERROR] insertComentario error.")
+                Log.e(TAG, "[ERROR] insertTopico error.")
             }
         })
     }

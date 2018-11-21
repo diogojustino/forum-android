@@ -34,12 +34,20 @@ class NovoTopicoActivity : ModeloActivity() {
             var autor = editAutor.text.toString()
             var titulo = editTitulo.text.toString()
             var descricao = editDescricao.text.toString()
-            if(autor.isEmpty() || titulo.isEmpty() || descricao.isEmpty()){
-                alerta("Falha!!")
+            if(autor.isEmpty()){
+                alerta("Autor Vazio!!")
+                return@setOnClickListener
+            }
+            if(titulo.isEmpty()){
+                alerta("Tituto Vazio!!")
+                return@setOnClickListener
+            }
+            if( descricao.isEmpty()){
+                alerta("Descricao Vazio!!")
                 return@setOnClickListener
             }
 
-            var topico: Topico = Topico(null, titulo, autor, descricao, categoriaEscolhida.id.toString(), Date(), Date())
+            var topico: Topico = Topico(null, titulo, autor, descricao, categoriaEscolhida.id.toString(), null, null)
             Log.i("WEBCLIENT", topico.autor)
             ForumWebClient().insertTopico(topico, object : ICallbackResponse<Topico> {
 

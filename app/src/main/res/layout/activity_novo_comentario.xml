@@ -9,15 +9,22 @@
 
 
     <EditText
-        android:id="@+id/editTextAddComentario"
+        android:id="@+id/edit_autor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:hint="@string/autor"
         android:inputType="textPersonName" />
+    <EditText
+        android:id="@+id/edit_comentario"
+        android:layout_weight="1"
+        android:hint="@string/comentario"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:inputType="textMultiLine" />
 
     <Button
-        android:id="@+id/btnSalvarComentario"
+        android:id="@+id/button_salvar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Salvar" />
+        android:text="@string/salvar" />
 </LinearLayout>

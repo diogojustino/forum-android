@@ -15,4 +15,7 @@ data class Topico(var id: Int? = null, var titulo: String?, var autor: String?, 
     override fun toString(): String = titulo.toString().toUpperCase() + " - Autor: " +autor.toString()
 }
 
-data class Comentario(var id: Int? = null, var descricao :String?, var categoria: Int?, var topico: Int?) : Serializable
+data class Comentario(var id: Int? = null,  var topico:String, var comentario :String, var autor: String,var created_at: Date? = null, var updated_at: Date? = null) : Serializable{
+
+    override fun toString(): String = comentario.toString().toUpperCase() + " Autor:" + autor
+}

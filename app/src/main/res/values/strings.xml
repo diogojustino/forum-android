@@ -5,10 +5,11 @@
 
     <string name="nova_categoria">Nova Categoria</string>
     <string name="categoria">Categoria</string>
-    <string name="salvar">Salvar</string>
     <string name="title_activity_teste">teste</string>
     <string name="adicionar_topico">Adicionar topico</string>
-    <string name="autor">Autor</string>
     <string name="titulo">Titulo</string>
     <string name="descricao">Descrição</string>
+    <string name="autor">Autor</string>
+    <string name="comentario">Comentário</string>
+    <string name="salvar">Salvar</string>
 </resources>

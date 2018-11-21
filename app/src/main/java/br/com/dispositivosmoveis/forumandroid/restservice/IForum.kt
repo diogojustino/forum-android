@@ -41,7 +41,7 @@ interface IForum {
     fun updateTopico(@Path("id") id: Int, @Body topico: Topico): Call<Topico>
 
     @GET("/topico/{id}/comentarios")
-    fun getComentarios(@Path("id") id: Int): Call<Categoria>
+    fun getComentarios(@Path("id") id: Int): Call<List<Comentario>>
 
 
     //COMENTÁRIOS

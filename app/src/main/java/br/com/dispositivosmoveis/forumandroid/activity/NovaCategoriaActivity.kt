@@ -39,9 +39,10 @@ class NovaCategoriaActivity : ModeloActivity(){
 
                 override fun success(instance: Categoria){
                     alerta("Categoria ${categoria.nome!!.toUpperCase()} criada com sucesso")
+                    finish()
                 }
             })
-            finish()
+
         }
     }
 

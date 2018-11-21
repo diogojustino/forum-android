@@ -28,8 +28,17 @@ class TopicosActivity : ModeloActivity() {
 
         categoriaEscolhida = intent.extras.getSerializable("categoria") as Categoria
         buttonAdicionarTopico = findViewById(R.id.button_adicionar_topico)
-        listTopicos = findViewById(R.id.list_topico)
+        listTopicos = findViewById(R.id.list_topico) as ListView
 
+        //EXIBIR A LISTA DE TOPICOS DE UMA CATEGORIA
+        listTopicos.setOnItemClickListener { parent, view, position, id ->
+            var topico: Topico = parent.adapter.getItem(position) as Topico
+            val intent: Intent = Intent(this@TopicosActivity.getBaseContext(), ComentariosActivity::class.java)
+            val bundle: Bundle = Bundle()
+            bundle.putSerializable("topico", topico)
+            intent.putExtras(bundle)
+            startActivity(intent)
+        }
 
         //CRIA UM NOVO TOPICO
         buttonAdicionarTopico.setOnClickListener {
