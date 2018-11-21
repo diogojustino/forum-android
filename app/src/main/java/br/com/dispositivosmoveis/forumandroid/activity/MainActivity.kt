@@ -17,6 +17,7 @@ class MainActivity : ModeloActivity() {
     private lateinit var btnAddCategoria: Button
 
     private lateinit var btnRemoveCategoria: ImageButton
+    private var categoriaID: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +25,7 @@ class MainActivity : ModeloActivity() {
         btnAddCategoria = findViewById<Button>(R.id.btn_add_categoria)
         listView = findViewById(R.id.listView) as ListView
 
-        //btnRemoveCategoria = findViewById(R.id.removeButton)
+        btnRemoveCategoria = findViewById(R.id.removeButton)
 
         //CRIAR NOVA CATEGORIA
         btnAddCategoria.setOnClickListener {
@@ -42,17 +43,31 @@ class MainActivity : ModeloActivity() {
             startActivity(intent)
         }
 
-        //REMOVE UMA CATEGORIA AO SEGURAR ELA
+        //SELECIONA O ID DE UMA CATEGORIA PARA REMOVER OU EDITAR
         listView.setOnItemLongClickListener { parent, view, position, id ->
 
             var categoria: Categoria = parent.adapter.getItem(position) as Categoria
-            var categoriaID = categoria.id
-            ForumWebClient().removeCategoria(categoriaID!!)
-            this@MainActivity.recreate()
-            alerta("Categoria ${categoria.nome!!.toUpperCase()} removida com sucesso")
+            categoriaID = categoria.id!!
+
+            alerta("Categoria ${categoria.nome!!.toUpperCase()} selecionada")
 
             true
 
+        }
+
+        //BOTÃO DE REMOVER UMA CATEGORIA COM O ID SELECIONADO
+        btnRemoveCategoria.setOnClickListener {
+
+            var cat = categoriaID
+
+            if (cat > 0) {
+
+                ForumWebClient().removeCategoria(cat!!)
+                this@MainActivity.recreate()
+                alerta("Categoria removida com sucesso")
+            } else {
+                alerta("ESCOLHA A CATEGORIA!")
+            }
         }
 
 

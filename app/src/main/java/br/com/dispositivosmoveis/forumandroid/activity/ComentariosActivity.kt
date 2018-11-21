@@ -3,10 +3,7 @@ package br.com.dispositivosmoveis.forumandroid.activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import br.com.dispositivosmoveis.forumandroid.R
 import com.moveis.forum.restservice.Comentario
 import com.moveis.forum.restservice.ForumWebClient
@@ -22,6 +19,9 @@ class ComentariosActivity : ModeloActivity() {
     private lateinit var textDescricao: TextView
     private lateinit var textTitulo: TextView
 
+    private lateinit var btnRemoveComentario: ImageButton
+    private var comentarioID: Int = 0
+
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
         setContentView(R.layout.activity_comentarios)
@@ -32,6 +32,8 @@ class ComentariosActivity : ModeloActivity() {
         textAutor = findViewById(R.id.text_autor)
         textDescricao = findViewById(R.id.text_descricao)
         textTitulo = findViewById(R.id.text_titulo)
+
+        btnRemoveComentario = findViewById(R.id.removeButton)
 
 
         textAutor.setText("Autor: " + topicoEscolhido.autor.toString())
@@ -45,15 +47,47 @@ class ComentariosActivity : ModeloActivity() {
             intent.putExtras(bundle)
             startActivity(intent)
         }
+
+
+        //SELECIONA O ID DE UM COMENTÁRIO PARA REMOVER OU EDITAR
+        listComentario.setOnItemLongClickListener { parent, view, position, id ->
+
+            var comentario: Comentario = parent.adapter.getItem(position) as Comentario
+            comentarioID = comentario.id!!
+
+
+            alerta("Categoria ${comentario.autor!!.toUpperCase()} selecionada")
+
+            true
+
+        }
+
+
+        //BOTÃO DE REMOVER UM COMENTÁRIO COM O ID SELECIONADO
+        btnRemoveComentario.setOnClickListener {
+
+            var com = comentarioID
+
+            if (com > 0) {
+
+                ForumWebClient().removeCategoria(com!!)
+                this@ComentariosActivity.recreate()
+                alerta("Comentário removido com sucesso")
+            } else {
+                alerta("ESCOLHA O COMENTÁRIO!")
+            }
+        }
+
+
     }
 
     override fun onStart() {
         super.onStart()
 
-        ForumWebClient().getComentarios(topicoEscolhido, object: ICallbackResponse<List<Comentario>>{
+        ForumWebClient().getComentarios(topicoEscolhido, object : ICallbackResponse<List<Comentario>> {
             override fun success(comentarios: List<Comentario>) {
                 val listaComentarios = arrayListOf<Comentario>()
-                for (comentario in comentarios!!){
+                for (comentario in comentarios!!) {
                     listaComentarios.add(comentario!!)
                 }
                 listComentario.adapter = ArrayAdapter<Comentario>(this@ComentariosActivity, android.R.layout.simple_list_item_1, listaComentarios)

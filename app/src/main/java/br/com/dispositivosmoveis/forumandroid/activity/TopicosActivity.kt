@@ -4,12 +4,8 @@ import android.content.Intent
 import android.nfc.Tag
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
+import android.widget.*
 
-import android.widget.Button
-
-import android.widget.ListAdapter
-import android.widget.ListView
 import br.com.dispositivosmoveis.forumandroid.R
 
 import com.moveis.forum.restservice.Categoria
@@ -22,6 +18,10 @@ class TopicosActivity : ModeloActivity() {
     private lateinit var categoriaEscolhida: Categoria
     private lateinit var buttonAdicionarTopico: Button
     private lateinit var listTopicos: ListView
+
+    private lateinit var btnRemoveTopico: ImageButton
+    private var topicoID: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_topicos)
@@ -29,6 +29,8 @@ class TopicosActivity : ModeloActivity() {
         categoriaEscolhida = intent.extras.getSerializable("categoria") as Categoria
         buttonAdicionarTopico = findViewById(R.id.button_adicionar_topico)
         listTopicos = findViewById(R.id.list_topico) as ListView
+
+        btnRemoveTopico = findViewById(R.id.removeButton)
 
         //EXIBIR A LISTA DE TOPICOS DE UMA CATEGORIA
         listTopicos.setOnItemClickListener { parent, view, position, id ->
@@ -50,26 +52,40 @@ class TopicosActivity : ModeloActivity() {
         }
 
 
-        //REMOVE UM TOPICO AO SEGURAR ELE
+        //SELECIONA O ID DE UM TOPICO PARA REMOVER OU EDITAR
         listTopicos.setOnItemLongClickListener { parent, view, position, id ->
 
             var topico: Topico = parent.adapter.getItem(position) as Topico
-            var topicoID = topico.id
-            ForumWebClient().removeTopico(topicoID!!)
-            this@TopicosActivity.recreate()
-            alerta("Topico ${topico.titulo!!.toUpperCase()} foi removido com sucesso")
+            topicoID = topico.id!!
+
+            alerta("Topico ${topico.titulo!!.toUpperCase()} selecionado")
 
             true
 
+        }
+
+        //BOTÃO DE REMOVER UM TÓPICO COM O ID SELECIONADO
+        btnRemoveTopico.setOnClickListener {
+
+            var top = topicoID
+
+            if (top > 0) {
+
+                ForumWebClient().removeTopico(top!!)
+                this@TopicosActivity.recreate()
+                alerta("Topico removido com sucesso")
+            } else {
+                alerta("SELECIONE UM TÓPICO!")
+            }
         }
     }
 
     override fun onStart() {
         super.onStart()
 
-        ForumWebClient().getTopicos(categoriaEscolhida, object: ICallbackResponse<List<Topico>> {
+        ForumWebClient().getTopicos(categoriaEscolhida, object : ICallbackResponse<List<Topico>> {
             override fun success(topicos: List<Topico>) {
-                val listaTopicos= arrayListOf<Topico>()
+                val listaTopicos = arrayListOf<Topico>()
                 for (topico in topicos!!) {
 
                     listaTopicos.add(topico!!)
