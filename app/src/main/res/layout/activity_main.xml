@@ -1,40 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="16dp"
     tools:context=".activity.MainActivity">
 
-    <Button
-        android:id="@+id/btn_add_categoria"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/nova_categoria"
-        android:layout_gravity="bottom|right"
-        android:visibility="visible"
-        />
-
-    <ImageButton
-        android:id="@+id/removeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|left"
-        android:layout_marginRight="16dp"
-        android:clickable="true"
-        android:background="@android:color/transparent"
-        android:src="@android:drawable/ic_menu_delete" />
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="420dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:padding="16dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-        <ListView
-            android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="420dp" />
 
+
+
+        <ImageButton
+            android:id="@+id/removeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginRight="50dp"
+            android:clickable="true"
+            android:background="@android:color/transparent"
+            android:src="@android:drawable/ic_menu_delete" />
+        <ImageButton
+            android:id="@+id/button_nova_categoria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="50dp"
+            android:background="@android:color/transparent"
+            android:src="@android:drawable/ic_menu_add"
+            android:visibility="visible"
+            />
+        <ImageButton
+            android:id="@+id/button_editar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@android:color/transparent"
+            android:src="@android:drawable/ic_menu_edit"/>
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

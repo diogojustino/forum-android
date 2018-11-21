@@ -138,6 +138,7 @@ class ForumWebClient {
             override fun onResponse(call: Call<List<Topico>?>?, response: Response<List<Topico>?>?) {
 
                 if (iCallbackResponse != null) {
+
                     response?.body()?.let {
                         val topicos: List<Topico> = it
                         iCallbackResponse.success(topicos)
@@ -161,12 +162,15 @@ class ForumWebClient {
         call.enqueue(object : Callback<Topico?> {
             override fun onResponse(call: Call<Topico?>?, response: Response<Topico?>?) {
                 if (iCallbackResponse != null) {
+                    //erro por aqui provavelmente
+                    Log.i(TAG, response.toString())
                     response?.body()?.let {
                         val topico: Topico = it
                         iCallbackResponse.success(topico)
+                        Log.i(TAG, "[INFO] updateTopico sucessfull.")
                     }
                 }
-                Log.i(TAG, "[INFO] updateTopico sucessfull.")
+
             }
 
             override fun onFailure(call: Call<Topico?>?, t: Throwable?) {

@@ -14,23 +14,40 @@ import com.moveis.forum.restservice.*
 class MainActivity : ModeloActivity() {
 
     private lateinit var listView: ListView
-    private lateinit var btnAddCategoria: Button
+    private lateinit var buttonNovaCategoria: ImageButton
 
     private lateinit var btnRemoveCategoria: ImageButton
-    private var categoriaID: Int = 0
-
+    private lateinit var buttonEditarCategoria: ImageButton
+    private var categoria: Categoria? = null
+    private val KEY = "categoria"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        btnAddCategoria = findViewById<Button>(R.id.btn_add_categoria)
+        buttonNovaCategoria = findViewById<ImageButton>(R.id.button_nova_categoria)
+        buttonEditarCategoria = findViewById<ImageButton>(R.id.button_editar)
         listView = findViewById(R.id.listView) as ListView
 
         btnRemoveCategoria = findViewById(R.id.removeButton)
 
         //CRIAR NOVA CATEGORIA
-        btnAddCategoria.setOnClickListener {
+        buttonNovaCategoria.setOnClickListener {
             val intent: Intent = Intent(this@MainActivity.getBaseContext(), NovaCategoriaActivity::class.java)
             startActivity(intent)
+        }
+        buttonEditarCategoria.setOnClickListener {
+           if(categoria != null){
+               var bundle = Bundle()
+               val intent: Intent = Intent(this@MainActivity.getBaseContext(), NovaCategoriaActivity::class.java)
+
+               bundle.putSerializable(KEY, categoria )
+               intent.putExtras(bundle)
+               startActivity(intent)
+           }else{
+
+               alerta("ESCOLHA A CATEGORIA!")
+           }
+
+
         }
 
         //EXIBIR A LISTA DE TOPICOS DE UMA CATEGORIA
@@ -38,18 +55,17 @@ class MainActivity : ModeloActivity() {
             var categoria: Categoria = parent.adapter.getItem(position) as Categoria
             val intent: Intent = Intent(this@MainActivity.baseContext, TopicosActivity::class.java)
             val bundle: Bundle = Bundle()
-            bundle.putSerializable("categoria", categoria)
+            bundle.putSerializable(KEY, categoria)
             intent.putExtras(bundle)
             startActivity(intent)
         }
 
-        //SELECIONA O ID DE UMA CATEGORIA PARA REMOVER OU EDITAR
+        //SELECIONA O UMA CATEGORIA PARA REMOVER OU EDITAR
         listView.setOnItemLongClickListener { parent, view, position, id ->
 
-            var categoria: Categoria = parent.adapter.getItem(position) as Categoria
-            categoriaID = categoria.id!!
+            categoria = parent.adapter.getItem(position) as Categoria
 
-            alerta("Categoria ${categoria.nome!!.toUpperCase()} selecionada")
+            alerta("Categoria ${categoria!!.nome!!.toUpperCase()} selecionada")
 
             true
 
@@ -58,13 +74,14 @@ class MainActivity : ModeloActivity() {
         //BOTÃO DE REMOVER UMA CATEGORIA COM O ID SELECIONADO
         btnRemoveCategoria.setOnClickListener {
 
-            var cat = categoriaID
 
-            if (cat > 0) {
 
-                ForumWebClient().removeCategoria(cat!!)
+            if (categoria != null) {
+
+                ForumWebClient().removeCategoria(categoria!!.id!!)
                 this@MainActivity.recreate()
                 alerta("Categoria removida com sucesso")
+                categoria = null
             } else {
                 alerta("ESCOLHA A CATEGORIA!")
             }
