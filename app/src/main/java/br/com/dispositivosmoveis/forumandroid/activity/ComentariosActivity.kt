@@ -14,33 +14,40 @@ class ComentariosActivity : ModeloActivity() {
 
     private lateinit var topicoEscolhido: Topico
     private lateinit var listComentario: ListView
-    private lateinit var buttonNovoComentario: Button
+
     private lateinit var textAutor: TextView
     private lateinit var textDescricao: TextView
     private lateinit var textTitulo: TextView
+    private lateinit var buttonRemover: ImageButton
+    private lateinit var buttonNovoCometario: ImageButton
+    private lateinit var buttonEditar: ImageButton
 
-    private lateinit var btnRemoveComentario: ImageButton
-    private var comentarioID: Int = 0
+
+    private var comentario: Comentario? = null
 
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
         setContentView(R.layout.activity_comentarios)
 
+
+        buttonNovoCometario = findViewById(R.id.button_novo_comentario)
+        buttonEditar = findViewById(R.id.button_editar)
+        buttonRemover = findViewById(R.id.button_remover)
+
         topicoEscolhido = intent.extras.getSerializable("topico") as Topico
-        buttonNovoComentario = findViewById(R.id.button_novo_comentario)
         listComentario = findViewById(R.id.list_comentarios)
         textAutor = findViewById(R.id.text_autor)
         textDescricao = findViewById(R.id.text_descricao)
         textTitulo = findViewById(R.id.text_titulo)
 
-        btnRemoveComentario = findViewById(R.id.removeButton)
+
 
 
         textAutor.setText("Autor: " + topicoEscolhido.autor.toString())
         textDescricao.setText("Descricao: " + topicoEscolhido.descricao.toString())
         textTitulo.setText("Tituto: " + topicoEscolhido.titulo.toString())
 
-        buttonNovoComentario.setOnClickListener {
+        buttonNovoCometario.setOnClickListener {
             val intent: Intent = Intent(this@ComentariosActivity.getBaseContext(), NovoComentarioActivity::class.java)
             val bundle: Bundle = Bundle()
             bundle.putSerializable("topico", topicoEscolhido)
@@ -52,11 +59,11 @@ class ComentariosActivity : ModeloActivity() {
         //SELECIONA O ID DE UM COMENTÁRIO PARA REMOVER OU EDITAR
         listComentario.setOnItemLongClickListener { parent, view, position, id ->
 
-            var comentario: Comentario = parent.adapter.getItem(position) as Comentario
-            comentarioID = comentario.id!!
+            comentario = parent.adapter.getItem(position) as Comentario
 
 
-            alerta("Categoria ${comentario.autor!!.toUpperCase()} selecionada")
+
+            alerta("Comentario ${comentario!!.autor!!.toUpperCase()} selecionada")
 
             true
 
@@ -64,13 +71,10 @@ class ComentariosActivity : ModeloActivity() {
 
 
         //BOTÃO DE REMOVER UM COMENTÁRIO COM O ID SELECIONADO
-        btnRemoveComentario.setOnClickListener {
+        buttonRemover.setOnClickListener {
+            if (comentario != null) {
 
-            var com = comentarioID
-
-            if (com > 0) {
-
-                ForumWebClient().removeCategoria(com!!)
+                ForumWebClient().removerComentario(comentario!!.id!!)
                 this@ComentariosActivity.recreate()
                 alerta("Comentário removido com sucesso")
             } else {
@@ -78,6 +82,21 @@ class ComentariosActivity : ModeloActivity() {
             }
         }
 
+        buttonEditar.setOnClickListener {
+            if(topicoEscolhido != null){
+                var bundle = Bundle()
+                val intent: Intent = Intent(this@ComentariosActivity.getBaseContext(), NovoComentarioActivity::class.java)
+
+                bundle.putSerializable("comentario", comentario )
+                intent.putExtras(bundle)
+                startActivity(intent)
+            }else{
+
+                alerta("ESCOLHA O TOPICO!")
+            }
+
+
+        }
 
     }
 

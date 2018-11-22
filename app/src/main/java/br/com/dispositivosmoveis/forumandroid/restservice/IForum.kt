@@ -37,10 +37,10 @@ interface IForum {
     @DELETE("/topico/{id}/")
     fun removeTopico(@Path("id") id: Int): Call<Topico>
 
-    @PUT("/topico/{id}")
+    @PATCH("/topico/{id}/")
     fun updateTopico(@Path("id") id: Int, @Body topico: Topico): Call<Topico>
 
-    @GET("/topico/{id}/comentarios")
+    @GET("/topico/{id}/comentarios/")
     fun getComentarios(@Path("id") id: Int): Call<List<Comentario>>
 
 
@@ -50,7 +50,7 @@ interface IForum {
     @GET("/comentario/")
     fun getComentario(): Call<List<Comentario>>
 
-    @POST("/comentario")
+    @POST("/comentario/")
     fun insertComentario(@Body comentario: Comentario): Call<Comentario>
 
     @PUT("/comentario/{id}/")

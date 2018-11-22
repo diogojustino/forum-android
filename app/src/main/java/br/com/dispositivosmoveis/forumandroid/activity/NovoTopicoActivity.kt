@@ -56,7 +56,7 @@ class NovoTopicoActivity : ModeloActivity() {
             }
 
             if(topicoEscolhida == null) {
-                var topico: Topico = Topico(null, titulo, autor, descricao, categoriaEscolhida.id.toString(), null, null)
+                var topico: Topico = Topico(null, titulo, autor, descricao, categoriaEscolhida.id.toString())
                 Log.i("WEBCLIENT", topico.autor)
                 ForumWebClient().insertTopico(topico, object : ICallbackResponse<Topico> {
 
